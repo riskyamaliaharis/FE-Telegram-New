@@ -142,7 +142,6 @@
                             <b-button
                               v-b-modal="modalId(index)"
                               style="margin-bottom:5px; width: 100%"
-                              @click="modalOpen(index)"
                             >
                               {{ item.user_name }}
                             </b-button>
@@ -187,6 +186,33 @@
                                   <i class="fa fa-video-camera fa-lg"></i>
                                   Video Call
                                 </button>
+                              </div>
+                              <br />
+                              <div class="text-center">
+                                <b-button
+                                  style="margin:auto"
+                                  @click="friendsLoc(item.user_location)"
+                                  >{{ item.user_name.split(' ')[0] }}'s
+                                  Location</b-button
+                                >
+                              </div>
+
+                              <br /><br />
+                              <div class="maps" v-show="isShowMaps">
+                                <GmapMap
+                                  :center="coordinate"
+                                  :zoom="10"
+                                  map-type-id="terrain"
+                                  style="width: 80%; height: 300px; margin-bottom: 10px; margin: auto"
+                                >
+                                  <GmapMarker
+                                    :position="coordinate"
+                                    :clickable="true"
+                                    :draggable="true"
+                                    @click="clickMarker"
+                                    icon="https://img.icons8.com/dusk/64/000000/map-pin.png"
+                                  />
+                                </GmapMap>
                               </div>
                             </b-modal>
                           </div>
@@ -240,6 +266,7 @@ export default {
       },
       isNav: false,
       image: false,
+      isShowMaps: false,
       coordinate: {
         lat: 10,
         lng: 10
@@ -281,6 +308,22 @@ export default {
         this.isNav = true
       }
       this.goToProfile()
+    },
+    friendsLoc(loc) {
+      if (this.isShowMaps) {
+        this.isShowMaps = false
+      } else {
+        this.isShowMaps = true
+      }
+
+      if (loc !== '') {
+        const getLatLng = loc.split(',')
+        this.coordinate.lat = Number(getLatLng[0])
+        this.coordinate.lng = Number(getLatLng[1])
+      } else {
+        this.coordinate.lat = 10
+        this.coordinate.lng = 10
+      }
     },
     modalId(index) {
       return 'modal' + index

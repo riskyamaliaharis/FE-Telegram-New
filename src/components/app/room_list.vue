@@ -15,7 +15,8 @@
             <b-media>
               <template #aside>
                 <b-img
-                  :img-src="'http://localhost:3000/users/' + item.user_photo"
+                  style="border-radius:10px"
+                  :src="'http://localhost:3000/users/' + item.user_photo"
                   width="64"
                   :alt="profile"
                 ></b-img>
@@ -24,6 +25,9 @@
               Fusce condimentum nunc ac nis ...
             </b-media>
             <small>3 days ago</small>
+          </div>
+          <div class="d-flex w-100 justify-content-end">
+            <b-badge variant="danger" pill>14</b-badge>
           </div>
         </b-list-group-item>
       </b-list-group>
