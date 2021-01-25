@@ -41,7 +41,6 @@ export default {
 <style scoped>
 div.body {
   background-color: rgb(227, 225, 230);
-  min-height: 700px;
 }
 
 .left {

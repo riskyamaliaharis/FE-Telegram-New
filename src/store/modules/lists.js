@@ -9,17 +9,17 @@ export default {
     myId: ''
   },
   mutations: {
-    setRequestBodyAddRoomList(context, payload) {
-      context.form.user_a = payload.id_user_a
-      context.form.user_b = payload.id_user_b
+    setRequestBodyAddRoomList(state, payload) {
+      state.form.user_a = payload.id_user_a
+      state.form.user_b = payload.id_user_b
     },
-    setDataRooms(context, payload) {
-      context.rooms = payload
-      console.log('context.rooms')
-      console.log(context.rooms)
+    setDataRooms(state, payload) {
+      state.rooms = payload
+      console.log('state.rooms')
+      console.log(state.rooms)
     },
-    setMyId(context, payload) {
-      context.myId = payload
+    setMyId(state, payload) {
+      state.myId = payload
     }
   },
   actions: {

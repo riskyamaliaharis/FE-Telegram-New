@@ -6,10 +6,10 @@
     <div class="messages-list">
       <b-list-group>
         <b-list-group-item
-          href="#"
           class="flex-column align-items-start"
           v-for="(item, index) in rooms"
           :key="index"
+          @click="sendDataThisRoom(item)"
         >
           <div class="d-flex w-100 justify-content-between">
             <b-media>
@@ -36,10 +36,16 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 export default {
   computed: {
     ...mapGetters({ rooms: 'setRoomListGetters' })
+  },
+  methods: {
+    ...mapMutations(['changeDataItem']),
+    sendDataThisRoom(item) {
+      this.changeDataItem(item)
+    }
   }
 }
 </script>
