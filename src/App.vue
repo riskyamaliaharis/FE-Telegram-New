@@ -1,15 +1,35 @@
 <template>
-  <div id="app">
-    <div id="nav">
+  <div>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <!-- <div id="nav">
       <router-link to="/maps">Maps</router-link> |
       <router-link to="/chat">Chat</router-link>
-    </div>
+    </div> -->
     <router-view />
   </div>
 </template>
 
+<script>
+
+  import { mapActions } from 'vuex'
+export default {
+  name: 'App',
+  created() {
+    this.interceptorRequest()
+    this.interceptorResponse()
+  },
+  methods: {
+    ...mapActions(['interceptorRequest']),
+    ...mapActions(['interceptorResponse'])
+  }
+
+}
+</script>
 <style>
-#app {
+/* #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -28,5 +48,5 @@
 
 #nav a.router-link-exact-active {
   color: #42b983;
-}
+} */
 </style>

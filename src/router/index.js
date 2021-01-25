@@ -1,33 +1,39 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
-import Login from "../views/Login.vue";
-import Maps from "../views/Maps.vue";
-import Chat from "../views/Chat.vue";
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import Login from '../views/Auth/Login.vue'
+import Register from '../views/Auth/Register.vue'
+import Maps from '../views/Maps.vue'
+import Chat from '../views/App/Chat.vue'
 
-Vue.use(VueRouter);
+Vue.use(VueRouter)
 
 const routes = [
   {
-    path: "/",
-    name: "Login",
+    path: '/',
+    name: 'Login',
     component: Login
   },
   {
-    path: "/maps",
-    name: "Maps",
+    path: '/signup',
+    name: 'Register',
+    component: Register
+  },
+  {
+    path: '/maps',
+    name: 'Maps',
     component: Maps
   },
   {
-    path: "/chat",
-    name: "Chat",
+    path: '/chat',
+    name: 'Chat',
     component: Chat
   }
-];
+]
 
 const router = new VueRouter({
-  mode: "history",
+  mode: 'history',
   base: process.env.BASE_URL,
   routes
-});
+})
 
-export default router;
+export default router

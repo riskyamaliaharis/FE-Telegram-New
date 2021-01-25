@@ -1,10 +1,11 @@
 <template>
   <div class="login">
     <b-container>
-      <b-form>
+      <b-form @submit.prevent="onSubmit" @reset.prevent="onReset">
         <b-form-group id="input-group-1" label="Username:" label-for="input-1">
           <b-form-input
             id="input-1"
+            v-model="form.username"
             required
             placeholder="Enter username"
           ></b-form-input>
@@ -18,8 +19,8 @@
         >
           <b-form-input
             id="input-2"
+            v-model="form.email"
             type="email"
-            required
             placeholder="Enter email"
           ></b-form-input>
         </b-form-group>
@@ -31,8 +32,8 @@
         >
           <b-form-input
             id="input-3"
+            v-model="form.password"
             type="password"
-            required
             placeholder="Enter password"
           ></b-form-input>
         </b-form-group>
@@ -42,6 +43,34 @@
     </b-container>
   </div>
 </template>
+
+<script>
+export default {
+  name: "Login",
+  data() {
+    return {
+      form: {
+        username: "",
+        email: "",
+        password: ""
+      }
+    };
+  },
+  methods: {
+    onSubmit() {
+      this.$router.push({
+        name: "Chat",
+        params: {
+          ...this.form
+        }
+      });
+    },
+    onReset() {
+      //proses reset
+    }
+  }
+};
+</script>
 
 <style scoped>
 .login {
