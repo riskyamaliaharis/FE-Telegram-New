@@ -56,11 +56,12 @@ export default {
         axios
           .patch(`http://localhost:3000/updateuser/${payload}`, data)
           .then(response => {
+            context.dispatch('getMyProfile')
             alert(response.data.msg)
             resolve(response)
           })
           .catch(error => {
-            alert('Failed to post new product ' + error.response.data.msg)
+            alert('Failed to update profile' + error.response.data.msg)
             reject(error.response)
           })
       })

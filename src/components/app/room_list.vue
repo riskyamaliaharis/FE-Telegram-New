@@ -27,7 +27,7 @@
             <small>3 days ago</small>
           </div>
           <div class="d-flex w-100 justify-content-end">
-            <b-badge variant="danger" pill>14</b-badge>
+            <i class="fa fa-trash fa-lg delete"></i>
           </div>
         </b-list-group-item>
       </b-list-group>
@@ -36,15 +36,17 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 export default {
   computed: {
     ...mapGetters({ rooms: 'setRoomListGetters' })
   },
   methods: {
     ...mapMutations(['changeDataItem']),
+    ...mapActions(['getChatsVuex']),
     sendDataThisRoom(item) {
       this.changeDataItem(item)
+      this.getChatsVuex(item.room_random_number)
     }
   }
 }
@@ -53,6 +55,9 @@ export default {
 <style scoped>
 .messages-list {
   background-color: white;
+}
+.delete {
+  cursor: pointer;
 }
 .card-chat {
   width: 100%;

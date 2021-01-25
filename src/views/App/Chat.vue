@@ -27,9 +27,10 @@ export default {
   created() {
     this.setMyId(this.user.user_id)
     this.getRoomListVuex()
+    this.getMyProfile(this.user.user_id)
   },
   methods: {
-    ...mapActions(['getRoomListVuex']),
+    ...mapActions(['getRoomListVuex', 'getMyProfile']),
     ...mapMutations(['setMyId'])
   },
   computed: {
@@ -44,11 +45,12 @@ div.body {
 }
 
 .left {
-  background-color: rebeccapurple;
+  background-color: #7e98df;
   padding: 0;
 }
 
 .right {
   background-color: rgb(227, 225, 230);
+  padding: 0;
 }
 </style>

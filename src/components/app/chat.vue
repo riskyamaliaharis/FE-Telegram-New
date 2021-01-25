@@ -30,7 +30,7 @@
                       </li>
                       <b-modal id="modal-tall" title="Profile">
                         <b-button
-                          style="background-color:rebeccapurple;position: absolute; right: 15px; box-shadow: 5px 5px 5px #888888;"
+                          style="background-color:#7e98df;;position: absolute; right: 15px; box-shadow: 5px 5px 5px #888888;"
                           @click="handleLogout"
                           ><i class="fa fa-sign-out fa-2x"></i
                         ></b-button>
@@ -110,7 +110,7 @@
                               id="input-2"
                               variant="primary"
                               @click="currentLocation"
-                              style="background-color:rebeccapurple"
+                              style="background-color:#7e98df;"
                               >Change to Current Location</b-button
                             >
                           </b-form-group>
@@ -289,7 +289,6 @@ export default {
   },
   methods: {
     ...mapActions([
-      'getMyProfile',
       'logout',
       'editMyProfile',
       'getContactsVuex',
@@ -333,7 +332,6 @@ export default {
       alert('Success Logout')
     },
     goToProfile() {
-      this.getMyProfile(this.user.user_id)
       if (this.profile.user_location !== '') {
         const getLatLng = this.profile.user_location.split(',')
         this.coordinate.lat = Number(getLatLng[0])
@@ -433,7 +431,7 @@ export default {
 }
 
 .navbar {
-  background: rebeccapurple;
+  background: #7e98df;
   width: 100%;
   height: 60px;
   display: flex;
@@ -486,7 +484,7 @@ export default {
 }
 
 .navbar .dd_menu .dd_left {
-  background: rebeccapurple;
+  background: #7e98df;
   padding: 15px 20px;
   border-top-left-radius: 15px;
   border-bottom-left-radius: 15px;
@@ -528,7 +526,7 @@ export default {
   border-radius: 50%;
 }
 label.uploadimg {
-  background-color: rebeccapurple;
+  background-color: #7e98df;
   color: white;
   width: 100px;
   height: 50px;
@@ -559,6 +557,6 @@ div.centered .upload-btn {
   display: inline-block;
   overflow: hidden;
   cursor: pointer;
-  background-color: rebeccapurple;
+  background-color: #7e98df;
 }
 </style>
