@@ -2,12 +2,12 @@
   <p align="center">
     <a href="link_deploy">View Demo</a>
     ·
-    <a href="">Report Bug</a>
+    <a href="https://github.com/riskyamaliaharis/FE-Telegram/blob/main/App's%20view.JPG">Report Bug</a>
     ·
-    <a href="">Request Feature</a>
+    <a href="https://github.com/riskyamaliaharis/FE-Telegram/blob/main/App's%20view.JPG">Request Feature</a>
   </p>
 
-![Image Banner]()
+![Image Banner](App's view.JPG)
 
 ## About The Project
 
