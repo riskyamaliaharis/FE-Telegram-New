@@ -20,43 +20,53 @@
       </div>
     </b-container>
     <div class="chat-area">
-      <div class="container">
-        <img
-          src="https://vignette.wikia.nocookie.net/upinipin/images/9/95/6_mail.png/revision/latest/window-crop/width/200/x-offset/0/y-offset/0/window-width/250/window-height/250?cb=20180206072414"
-          alt="Avatar"
-        />
-        <p>{{ itemChat }}</p>
-        <span class="time-right">11:00</span>
+      <div>
+        <b-row
+          v-for="(itema, index) in chatsMsg"
+          :key="index"
+          :align-h="itema.sender_id === profile.user_id ? 'end' : 'start'"
+          style="margin-bottom:20px"
+        >
+          <b-col cols="1" :order="itema.sender_id === profile.user_id ? 5 : 0"
+            ><img
+              style="width:40px; border-radius:50%"
+              :src="
+                itema.sender_id === profile.user_id
+                  ? `http://localhost:3000/users/${profile.user_photo}`
+                  : `http://localhost:3000/users/${itemChat.user_photo}`
+              "
+              alt="Avatar"
+              class="right"
+          /></b-col>
+          <b-col cols="4"
+            ><div
+              :class="
+                itema.sender_id === profile.user_id
+                  ? 'chat-styling-a'
+                  : 'chat-styling-b'
+              "
+            >
+              <p>{{ itema.room_message }}</p>
+              <span class="time-right">{{
+                itema.created_at.slice(11, 16)
+              }}</span>
+            </div></b-col
+          >
+        </b-row>
+        <br /><br />
       </div>
 
-      <div class="container darker">
-        <img
-          src="https://i.pinimg.com/236x/d1/8d/58/d18d5895ecf31209b6790609a4e2648a.jpg"
-          alt="Avatar"
-          class="right"
-        />
-        <p>{{ profile }}</p>
-        <span class="time-left">11:01</span>
-      </div>
-
-      <div class="container">
-        <img
-          src="https://vignette.wikia.nocookie.net/upinipin/images/9/95/6_mail.png/revision/latest/window-crop/width/200/x-offset/0/y-offset/0/window-width/250/window-height/250?cb=20180206072414"
-          alt="Avatar"
-        />
-        <p>{{ chatsMsg[0].room_message }}</p>
-        <span class="time-right">11:02</span>
-      </div>
-
-      <div class="container darker">
-        <img
-          src="https://i.pinimg.com/236x/d1/8d/58/d18d5895ecf31209b6790609a4e2648a.jpg"
-          alt="Avatar"
-          class="right"
-        />
-        <p>{{ chatsMsg }}</p>
-        <span class="time-left">11:05</span>
-      </div>
+      <!-- <div
+        v-for="(itema, index) in chatsMsg"
+        :key="index"
+        :class="
+          itema.sender_id === profile.user_id ? 'container darker' : 'container'
+        "
+      >
+        
+        <p>{{ itema.room_message }}</p>
+        <span class="time-left">{{ itema.created_at.slice(11, 16) }}</span>
+      </div> -->
     </div>
     <div class="input-area">
       <b-row class="right-bottom justify-content-md-center" align-v="center">
@@ -70,7 +80,7 @@
         </b-col>
         <b-col cols="1">
           <i
-            style="color:rebeccapurple"
+            style="color:#7e98df"
             class="fa fa-send fa-lg sending"
             @click="sendMessage"
           ></i>
@@ -127,6 +137,21 @@ export default {
 </script>
 
 <style scoped>
+.chat-styling-a {
+  background-color: #7e98df;
+  opacity: 0.8;
+  min-height: 55px;
+  border-radius: 16px 0 16px 16px;
+  padding: 10px;
+  color: white;
+}
+.chat-styling-b {
+  background-color: white;
+  min-height: 55px;
+  border-radius: 0 16px 16px 16px;
+  padding: 10px;
+  color: black;
+}
 .sending {
   cursor: pointer;
 }
@@ -139,7 +164,6 @@ export default {
   width: 100%;
   height: 100px;
   margin: 0;
-  opacity: 0.8;
 }
 .chat-area {
   height: 500px;
@@ -188,6 +212,9 @@ export default {
 .time-right {
   float: right;
   color: #aaa;
+  position: absolute;
+  bottom: 5px;
+  right: 24px;
 }
 
 /* Style time text */

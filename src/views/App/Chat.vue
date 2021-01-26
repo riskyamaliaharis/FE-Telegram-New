@@ -47,6 +47,7 @@ div.body {
 .left {
   background-color: #7e98df;
   padding: 0;
+  border-right-color: white;
 }
 
 .right {

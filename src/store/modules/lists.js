@@ -51,8 +51,23 @@ export default {
             reject(error)
           })
       })
+    },
+    deleteChatVuex(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .delete(`http://localhost:3000/deletechat/${payload}`)
+          .then(result => {
+            context.dispatch('getRoomListVuex')
+            resolve(result)
+          })
+          .catch(error => {
+            console.log(error)
+            reject(error)
+          })
+      })
     }
   },
+
   getters: {
     setRoomListGetters(state) {
       return state.rooms

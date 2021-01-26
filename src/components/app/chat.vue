@@ -433,7 +433,7 @@ export default {
 .navbar {
   background: #7e98df;
   width: 100%;
-  height: 60px;
+  height: 100px;
   display: flex;
   justify-content: space-between;
   align-items: center;

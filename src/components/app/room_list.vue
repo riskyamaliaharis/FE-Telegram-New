@@ -9,9 +9,11 @@
           class="flex-column align-items-start"
           v-for="(item, index) in rooms"
           :key="index"
-          @click="sendDataThisRoom(item)"
         >
-          <div class="d-flex w-100 justify-content-between">
+          <div
+            class="d-flex w-100 justify-content-between"
+            @click="sendDataThisRoom(item)"
+          >
             <b-media>
               <template #aside>
                 <b-img
@@ -27,7 +29,10 @@
             <small>3 days ago</small>
           </div>
           <div class="d-flex w-100 justify-content-end">
-            <i class="fa fa-trash fa-lg delete"></i>
+            <i
+              class="fa fa-trash fa-lg delete"
+              @click="deleteThisChat(item)"
+            ></i>
           </div>
         </b-list-group-item>
       </b-list-group>
@@ -43,10 +48,13 @@ export default {
   },
   methods: {
     ...mapMutations(['changeDataItem']),
-    ...mapActions(['getChatsVuex']),
+    ...mapActions(['getChatsVuex', 'deleteChatVuex']),
     sendDataThisRoom(item) {
       this.changeDataItem(item)
       this.getChatsVuex(item.room_random_number)
+    },
+    deleteThisChat(item) {
+      this.deleteChatVuex(item.room_random_number)
     }
   }
 }
@@ -55,6 +63,8 @@ export default {
 <style scoped>
 .messages-list {
   background-color: white;
+  height: 480px;
+  overflow: auto;
 }
 .delete {
   cursor: pointer;
