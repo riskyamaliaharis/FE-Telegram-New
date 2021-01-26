@@ -24,7 +24,7 @@
                 ></b-img>
               </template>
               <h5 class="mt-0">{{ item.user_name }}</h5>
-              Fusce condimentum nunc ac nis ...
+              Sama-sama, terbaik emang T...
             </b-media>
             <small>3 days ago</small>
           </div>
