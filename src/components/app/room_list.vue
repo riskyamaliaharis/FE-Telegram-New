@@ -24,15 +24,11 @@
                 ></b-img>
               </template>
               <h5 class="mt-0">{{ item.user_name }}</h5>
-              Sama-sama, terbaik emang T...
+              {{ item.last_message.substring(0, 30) }} ...
             </b-media>
-            <small>3 days ago</small>
-          </div>
-          <div class="d-flex w-100 justify-content-end">
-            <i
-              class="fa fa-trash fa-lg delete"
-              @click="deleteThisChat(item)"
-            ></i>
+            <small style="text-align:right">{{
+              formatTime(item.updated_at)
+            }}</small>
           </div>
         </b-list-group-item>
       </b-list-group>
@@ -42,7 +38,20 @@
 
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex'
+import io from 'socket.io-client'
+import moment from 'moment'
 export default {
+  data() {
+    return {
+      socket: io('http://localhost:3000'),
+      oldRoom: ''
+    }
+  },
+  created() {
+    this.socket.on('chatMessage', data => {
+      this.setChat(data)
+    })
+  },
   computed: {
     ...mapGetters({ rooms: 'setRoomListGetters' })
   },
@@ -50,11 +59,24 @@ export default {
     ...mapMutations(['changeDataItem']),
     ...mapActions(['getChatsVuex', 'deleteChatVuex']),
     sendDataThisRoom(item) {
+      console.log(item)
       this.changeDataItem(item)
-      this.getChatsVuex(item.room_random_number)
+      // if (this.oldRoom) {
+      // const newData = {
+      //   oldRoom: this.oldRoom,
+      //   room_chat: item.item.room_random_number
+      // }
+      // console.log(newData)
+      // this.socket.emit('changeRoom', newData)
+      this.getChatsVuex(item.room_random_number).then(() => {
+        this.oldRoom = item.room_random_number
+      })
+      // }
     },
-    deleteThisChat(item) {
-      this.deleteChatVuex(item.room_random_number)
+
+    formatTime(value) {
+      moment.locale('en')
+      return moment(String(value)).format('ll')
     }
   }
 }

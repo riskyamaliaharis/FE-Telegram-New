@@ -14,9 +14,6 @@ export default {
     setUser(state, payload) {
       state.user = payload
       state.token = payload.token
-      console.log('Proses Mutation setUser')
-      console.log(state.user)
-      console.log(state.token)
     },
     delUser(state) {
       state.user = {}
@@ -38,12 +35,10 @@ export default {
             console.log(result)
             context.commit('setUser', result.data.data)
             localStorage.setItem('token', result.data.data.token)
-            alert(result.data.msg)
             resolve(result)
           })
           .catch(error => {
-            console.log(error)
-            reject(error)
+            reject(error.response)
           })
       })
     },
@@ -59,7 +54,8 @@ export default {
           })
           .catch(error => {
             console.log(error)
-            reject(error)
+
+            reject(error.response)
           })
       })
     },

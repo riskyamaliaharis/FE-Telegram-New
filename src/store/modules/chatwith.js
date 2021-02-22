@@ -73,6 +73,7 @@ export default {
         axios
           .get(`http://localhost:3000/chat/${payload}`)
           .then(result => {
+            console.log(result)
             context.commit('saveMessages', result.data.data)
             resolve(result)
           })

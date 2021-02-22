@@ -2,16 +2,16 @@
   <p align="center">
     <a href="link_deploy">View Demo</a>
     ·
-    <a href="https://github.com/riskyamaliaharis/FE-Telegram/blob/main/App's%20view.JPG">Report Bug</a>
+    <a href="https://github.com/riskyamaliaharis/FE-Telegram/issues">Report Bug</a>
     ·
-    <a href="https://github.com/riskyamaliaharis/FE-Telegram/blob/main/App's%20view.JPG">Request Feature</a>
+    <a href="https://github.com/riskyamaliaharis/FE-Telegram/issues">Request Feature</a>
   </p>
 
-![Image Banner](App's view.JPG)
+![Image Banner](src/assets/telegram.jpg)
 
 ## About The Project
 
-This app called Telegram. It is not a rival of telegram of course, but just a simple project imitating concept of some chat applications like Telegram. Doing this project makes me know how chat applications work, like about implementing API of GMap, and many more.
+This app called Telegram. It is not a rival of telegram of course, but just a simple project imitating concept of some chat applications like Telegram. Real time chat of this application is using Socket-io (in Backend) and socket.io-client(in Frontend). Showing Location is using API of Google Map.
 
 ## Built With
 
@@ -32,7 +32,7 @@ This app called Telegram. It is not a rival of telegram of course, but just a si
 4. Add .env file at root folder project
 
 ```sh
-VUE_APP_ENDPOINT = [Backend API]
+VUE_APP_ENDPOINT = [Backend API](https://github.com/riskyamaliaharis/BE-Telegram)
 ```
 
 5. Type `npm run serve`

@@ -15,8 +15,6 @@ export default {
     },
     setDataRooms(state, payload) {
       state.rooms = payload
-      console.log('state.rooms')
-      console.log(state.rooms)
     },
     setMyId(state, payload) {
       state.myId = payload

@@ -58,7 +58,9 @@
 
 <script>
 import { mapActions } from 'vuex'
+import { alert } from '../../mixins/alert'
 export default {
+  mixins: [alert],
   data() {
     return {
       form: {
@@ -72,11 +74,11 @@ export default {
       console.log(this.form)
       this.login(this.form)
         .then(result => {
-          console.log(result)
+          this.successAlert(result.data.msg)
           this.$router.push('/chat')
         })
         .catch(error => {
-          alert(error.data.msg)
+          this.errorAlert(error.data.msg)
         })
     },
     onReset() {
@@ -109,11 +111,11 @@ p {
 
 p .a {
   font-size: 12px;
-  color: rebeccapurple;
+  color: #7e98df;
 }
 
 h4 {
-  color: rebeccapurple;
+  color: #7e98df;
   font-weight: 500;
   margin-bottom: 30px;
 }
@@ -133,7 +135,7 @@ input.input {
 
   border-radius: 30px;
   width: 100%;
-  border-color: rebeccapurple;
+  border-color: #7e98df;
   padding: 10px 28px;
   font-size: 16px;
   cursor: pointer;
@@ -142,12 +144,12 @@ input.input {
   margin-bottom: 10px;
 }
 .btn1 {
-  background-color: rebeccapurple;
+  background-color: #7e98df;
   color: white;
 }
 .btn2 {
   background-color: white;
-  color: rebeccapurple;
+  color: #7e98df;
 }
 div.line {
   border-color: rgb(227, 225, 230);

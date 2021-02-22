@@ -21,6 +21,7 @@
                       <li><i class="fa fa-bookmark-o"></i><br /></li>
                       <li><i class="fa fa-user-plus"></i> <br /></li>
                       <li><i class="fa fa-question-circle-o"></i></li>
+                      <li><i class="fa fa-sign-out"></i></li>
                     </ul>
                   </div>
                   <div class="dd_right">
@@ -28,7 +29,7 @@
                       <li v-b-modal.modal-tall>
                         Settings
                       </li>
-                      <b-modal id="modal-tall" title="Profile">
+                      <b-modal id="modal-tall" title="Profile" hide-footer>
                         <b-button
                           style="background-color:#7e98df;;position: absolute; right: 15px; box-shadow: 5px 5px 5px #888888;"
                           @click="handleLogout"
@@ -131,7 +132,13 @@
                             />
                           </GmapMap>
                         </div>
-                        <b-button @click="updateForm">Save Changes</b-button>
+                        <div style="text-align:right">
+                          <b-button
+                            @click="updateForm"
+                            style="background:#7e98df;"
+                            >Save Changes</b-button
+                          >
+                        </div>
                       </b-modal>
                       <li v-b-toggle.sidebar-1 @click="showMyContacts">
                         Contacts
@@ -139,16 +146,38 @@
                       <b-sidebar id="sidebar-1" title="Contacts" shadow>
                         <div class="px-3 py-2">
                           <div v-for="(item, index) in myContacts" :key="index">
-                            <b-button
-                              v-b-modal="modalId(index)"
-                              style="margin-bottom:5px; width: 100%"
-                            >
-                              {{ item.user_name }}
-                            </b-button>
+                            <b-row>
+                              <b-col cols="2">
+                                <img
+                                  v-if="!item.user_photo"
+                                  src="../../assets/icon-profile.png"
+                                  alt=""
+                                />
+
+                                <img
+                                  v-else
+                                  :src="
+                                    'http://localhost:3000/users/' +
+                                      item.user_photo
+                                  "
+                                  alt=""
+                                />
+                              </b-col>
+                              <b-col cols="10"
+                                ><b-button
+                                  v-b-modal="modalId(index)"
+                                  style="margin-bottom:5px; width: 100%; background:#7e98df;"
+                                >
+                                  {{ item.user_name }}
+                                </b-button></b-col
+                              >
+                            </b-row>
+
                             <b-modal
                               :id="'modal' + index"
                               :title="item.user_name"
                               style="width:300px"
+                              hide-footer
                             >
                               <img
                                 class="modal-contact"
@@ -223,7 +252,7 @@
                       <li @click="showModal = !showModal">
                         Invite Friends
                       </li>
-                      <b-modal v-model="showModal">
+                      <b-modal v-model="showModal" hide-footer>
                         <b-form-group
                           id="input-group-email"
                           label="Invite your friends through their email"
@@ -237,10 +266,18 @@
                             required
                           ></b-form-input>
                         </b-form-group>
-
-                        <b-button @click="goToAddFriend">Add Friend</b-button>
+                        <div style="text-align: right">
+                          <b-button
+                            @click="goToAddFriend"
+                            style="background: #7e98df;"
+                            >Add Friend</b-button
+                          >
+                        </div>
                       </b-modal>
                       <li>Telegram FAQ</li>
+                      <li @click="handleLogout">
+                        Logout
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -255,7 +292,9 @@
 
 <script>
 import { mapActions, mapGetters, mapMutations } from 'vuex'
+import { alert } from '../../mixins/alert'
 export default {
+  mixins: [alert],
   data() {
     return {
       form: {
@@ -329,7 +368,13 @@ export default {
     },
     handleLogout() {
       this.logout()
-      alert('Success Logout')
+        .then(() => {
+          this.successAlert('Thank you for using Telegram')
+          this.$router.push('/')
+        })
+        .catch(() => {
+          this.errorAlert('Sorry')
+        })
     },
     goToProfile() {
       if (this.profile.user_location !== '') {

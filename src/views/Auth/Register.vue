@@ -1,6 +1,12 @@
 <template>
   <div class="body" align-v="center">
-    <RegisterPage />
+    <b-container>
+      <b-row>
+        <b-col cols="12">
+          <RegisterPage />
+        </b-col>
+      </b-row>
+    </b-container>
   </div>
 </template>
 
