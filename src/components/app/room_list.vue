@@ -1,7 +1,11 @@
 <template>
   <div>
     <div class="searchMessage">
-      <b-form-input placeholder="Search"></b-form-input>
+      <b-form-input
+        v-model="search"
+        @change="searching"
+        placeholder="Search"
+      ></b-form-input>
     </div>
     <div class="messages-list">
       <b-list-group>
@@ -44,7 +48,8 @@ export default {
   data() {
     return {
       socket: io('http://localhost:3000'),
-      oldRoom: ''
+      oldRoom: '',
+      search: ''
     }
   },
   created() {
@@ -56,8 +61,8 @@ export default {
     ...mapGetters({ rooms: 'setRoomListGetters' })
   },
   methods: {
-    ...mapMutations(['changeDataItem']),
-    ...mapActions(['getChatsVuex', 'deleteChatVuex']),
+    ...mapMutations(['changeDataItem', 'setMySearch']),
+    ...mapActions(['getChatsVuex', 'deleteChatVuex', 'getRoomListVuex']),
     sendDataThisRoom(item) {
       console.log(item)
       this.changeDataItem(item)
@@ -73,7 +78,10 @@ export default {
       })
       // }
     },
-
+    searching() {
+      this.setMySearch(this.search)
+      this.getRoomListVuex()
+    },
     formatTime(value) {
       moment.locale('en')
       return moment(String(value)).format('ll')

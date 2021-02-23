@@ -6,7 +6,8 @@ export default {
       user_b: ''
     },
     rooms: [],
-    myId: ''
+    myId: '',
+    search: ''
   },
   mutations: {
     setRequestBodyAddRoomList(state, payload) {
@@ -18,6 +19,9 @@ export default {
     },
     setMyId(state, payload) {
       state.myId = payload
+    },
+    setMySearch(state, payload) {
+      state.search = payload
     }
   },
   actions: {
@@ -39,7 +43,9 @@ export default {
     getRoomListVuex(context) {
       return new Promise((resolve, reject) => {
         axios
-          .get(`http://localhost:3000/getlistchat/${context.state.myId}`)
+          .get(
+            `http://localhost:3000/getlistchat/${context.state.myId}?search=${context.state.search}`
+          )
           .then(result => {
             context.commit('setDataRooms', result.data.data)
             resolve(result)
