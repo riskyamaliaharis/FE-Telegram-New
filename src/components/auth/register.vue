@@ -83,7 +83,6 @@ export default {
   methods: {
     ...mapActions(['signup']),
     onSubmit() {
-      console.log(this.form)
       this.signup(this.form)
         .then(result => {
           this.successAlert(result.data.msg)

@@ -27,12 +27,10 @@ export default {
   },
   actions: {
     login(context, payload) {
-      console.log('payload ' + payload)
       return new Promise((resolve, reject) => {
         axios
-          .post(`http://localhost:3000/login`, payload)
+          .post(`${process.env.VUE_APP_URL}login`, payload)
           .then(result => {
-            console.log(result)
             context.commit('setUser', result.data.data)
             localStorage.setItem('token', result.data.data.token)
             resolve(result)
@@ -45,16 +43,12 @@ export default {
     signup(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .post(`http://localhost:3000/signup`, payload)
+          .post(`${process.env.VUE_APP_URL}signup`, payload)
           .then(result => {
-            console.log(result)
             context.commit('setNewUser', result.data.data)
-            alert(result.data.msg)
             resolve(result)
           })
           .catch(error => {
-            console.log(error)
-
             reject(error.response)
           })
       })
@@ -91,7 +85,6 @@ export default {
               error.response.data.msg === 'jwt malformed')
           ) {
             context.dispatch('logout')
-            alert(error.response.data.msg)
           }
           return Promise.reject(error)
         }

@@ -28,15 +28,13 @@ export default {
     addRoomListVuex(context) {
       return new Promise((resolve, reject) => {
         axios
-          .post(`http://localhost:3000/addlistchat`, context.state.form)
+          .post(`${process.env.VUE_APP_URL}addlistchat`, context.state.form)
           .then(result => {
-            alert(result.data.msg)
             context.dispatch('getRoomListVuex')
             resolve(result)
           })
           .catch(error => {
-            console.log(error)
-            reject(error)
+            reject(error.response)
           })
       })
     },
@@ -44,28 +42,13 @@ export default {
       return new Promise((resolve, reject) => {
         axios
           .get(
-            `http://localhost:3000/getlistchat/${context.state.myId}?search=${context.state.search}`
+            `${process.env.VUE_APP_URL}getlistchat/${context.state.myId}?search=${context.state.search}`
           )
           .then(result => {
             context.commit('setDataRooms', result.data.data)
             resolve(result)
           })
           .catch(error => {
-            console.log(error)
-            reject(error)
-          })
-      })
-    },
-    deleteChatVuex(context, payload) {
-      return new Promise((resolve, reject) => {
-        axios
-          .delete(`http://localhost:3000/deletechat/${payload}`)
-          .then(result => {
-            context.dispatch('getRoomListVuex')
-            resolve(result)
-          })
-          .catch(error => {
-            console.log(error)
             reject(error)
           })
       })

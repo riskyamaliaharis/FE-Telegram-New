@@ -2,68 +2,43 @@ import axios from 'axios'
 export default {
   state: {
     itemChat: '',
-    formFriend: {
-      user_a: '',
-      user_b: '',
-      room_random_number: ''
-    },
-    formMessages: {
-      room_random_number: '',
-      room_message: '',
-      sender_id: '',
-      receiver_id: ''
-    },
     chatsMsg: []
   },
   mutations: {
     changeDataItem(state, payload) {
       state.itemChat = payload
     },
-    updateFormFriend(state, payload) {
-      state.formFriend.user_a = payload.id_a
-      state.formFriend.user_b = payload.id_b
-      state.formFriend.room_random_number = payload.random_number
-    },
-    updateFormMessages(state, payload) {
-      state.formMessages.room_random_number = payload.random_number
-      state.formMessages.room_message = payload.message
-      state.formMessages.sender_id = payload.sender
-      state.formMessages.receiver_id = payload.receiver
-    },
     saveMessages(state, payload) {
       state.chatsMsg = payload
+    },
+    setChat(state, payload) {
+      state.chatsMsg.push(payload)
+      console.log(state.chatsMsg)
     }
   },
   actions: {
-    addRoomListForFriendVuex(context) {
+    addRoomListForFriendVuex(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .post(
-            `http://localhost:3000/addlistchatforfriend`,
-            context.state.formFriend
-          )
+          .post(`${process.env.VUE_APP_URL}addlistchatforfriend`, payload)
           .then(result => {
-            alert(result.data.msg)
             context.dispatch('getRoomListVuex')
             resolve(result)
           })
           .catch(error => {
-            console.log(error)
-            reject(error)
+            reject(error.response)
           })
       })
     },
-    addChatVuex(context) {
+    addChatVuex(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .post(`http://localhost:3000/chat/send`, context.state.formMessages)
+          .post(`${process.env.VUE_APP_URL}chat/send`, payload)
           .then(result => {
-            alert(result.data.msg)
             // context.dispatch('getRoomChatsVuex')
             resolve(result)
           })
           .catch(error => {
-            console.log(error)
             reject(error)
           })
       })
@@ -71,14 +46,12 @@ export default {
     getChatsVuex(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .get(`http://localhost:3000/chat/${payload}`)
+          .get(`${process.env.VUE_APP_URL}chat/${payload}`)
           .then(result => {
-            console.log(result)
             context.commit('saveMessages', result.data.data)
             resolve(result)
           })
           .catch(error => {
-            console.log(error)
             reject(error)
           })
       })

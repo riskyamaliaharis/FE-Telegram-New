@@ -45,12 +45,18 @@
 
                             <img
                               v-else
-                              :src="
-                                'http://localhost:3000/users/' +
-                                  profile.user_photo
-                              "
+                              :src="`${url}users/${profile.user_photo}`"
                               alt=""
                             />
+
+                            <span
+                              ><i
+                                v-if="profile.user_photo !== ''"
+                                @click="deletePhoto"
+                                class="fa fa-trash fa-2x"
+                                style="position:absolute; top:180px; right: 180px;z-index:10;color:#7e98df;cursor:pointer"
+                              ></i
+                            ></span>
 
                             <input
                               type="file"
@@ -91,14 +97,13 @@
                             id="input-group-1"
                             label="Email address:"
                             label-for="input-1"
-                            description="We'll never share your email with anyone else."
                           >
                             <b-form-input
                               id="input-1"
                               v-model="profile.user_email"
                               type="email"
                               placeholder="Enter email"
-                              required
+                              readonly
                             ></b-form-input>
                           </b-form-group>
 
@@ -156,10 +161,7 @@
 
                                 <img
                                   v-else
-                                  :src="
-                                    'http://localhost:3000/users/' +
-                                      item.user_photo
-                                  "
+                                  :src="`${url}users/${item.user_photo}`"
                                   alt=""
                                 />
                               </b-col>
@@ -189,10 +191,7 @@
 
                               <img
                                 v-else
-                                :src="
-                                  'http://localhost:3000/users/' +
-                                    item.user_photo
-                                "
+                                :src="`${url}users/${item.user_photo}`"
                                 alt=""
                                 style="width:200px; margin-left: 130px"
                               />
@@ -297,6 +296,7 @@ export default {
   mixins: [alert],
   data() {
     return {
+      url: process.env.VUE_APP_URL,
       form: {
         username: '',
         email: '',
@@ -332,7 +332,8 @@ export default {
       'editMyProfile',
       'getContactsVuex',
       'addFriendVuex',
-      'addRoomListVuex'
+      'addRoomListVuex',
+      'deletePhotos'
     ]),
     ...mapMutations([
       'sendMyUpdatedData',
@@ -381,8 +382,6 @@ export default {
         const getLatLng = this.profile.user_location.split(',')
         this.coordinate.lat = Number(getLatLng[0])
         this.coordinate.lng = Number(getLatLng[1])
-        console.log(this.coordinate.lat)
-        console.log('this.coordinate.lat')
       } else {
         this.coordinate.lat = 10
         this.coordinate.lng = 10
@@ -391,7 +390,6 @@ export default {
     onFileChange(e) {
       this.form.photo = e.target.files[0]
       var files = e.target.files || e.dataTransfer.files
-      console.log(files)
       if (!files.length) return
       this.createImage(files[0])
     },
@@ -406,10 +404,6 @@ export default {
       this.image = false
     },
     clickMarker(position) {
-      console.log('clicked marker')
-      console.log(position)
-      console.log(position.latLng.lat())
-      console.log(position.latLng.lng())
       this.coordinate = {
         lat: position.latLng.lat(),
         lng: position.latLng.lng()
@@ -425,7 +419,7 @@ export default {
           this.form.location = `${this.coordinate.lat}, ${this.coordinate.lng}`
         })
         .catch(error => {
-          alert(error)
+          console.log(error)
         })
     },
     showMyContacts() {
@@ -434,15 +428,17 @@ export default {
     updateForm() {
       this.form.username = this.profile.user_name
       this.form.email = this.profile.user_email
-      console.log('this.form')
-      console.log(this.form)
       this.sendMyUpdatedData(this.form)
       this.editMyProfile(this.user.user_id)
+        .then(result => {
+          this.successAlert(result.data.msg)
+        })
+        .catch(error => {
+          this.errorAlert(error.data.msg)
+        })
     },
     goToAddFriend() {
-      console.log('send data email one')
       this.sendEmailInvitation(this.inviteEmail)
-      console.log('three')
       this.addFriendVuex(this.user.user_id)
     },
     goToChatList(id) {
@@ -454,6 +450,15 @@ export default {
       this.formList.id_user_b = id
       this.setRequestBodyAddRoomList(this.formList)
       this.addRoomListVuex()
+    },
+    deletePhoto() {
+      this.deletePhotos(this.user.user_id)
+        .then(result => {
+          this.successAlert(result.data.msg)
+        })
+        .catch(error => {
+          this.errorAlert(error.data.msg)
+        })
     }
   }
 }

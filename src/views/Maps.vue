@@ -21,14 +21,14 @@
 
 <script>
 export default {
-  name: "Maps",
+  name: 'Maps',
   data() {
     return {
       coordinate: {
         lat: 10,
         lng: 10
       }
-    };
+    }
   },
   created() {
     this.$getLocation()
@@ -36,24 +36,24 @@ export default {
         this.coordinate = {
           lat: coordinates.lat,
           lng: coordinates.lng
-        };
-        console.log(coordinates);
+        }
+        console.log(coordinates)
       })
       .catch(error => {
-        alert(error);
-      });
+        alert(error)
+      })
   },
   methods: {
     clickMarker(position) {
-      console.log("clicked marker");
-      console.log(position);
-      console.log(position.latLng.lat());
-      console.log(position.latLng.lng());
+      console.log('clicked marker')
+      console.log(position)
+      console.log(position.latLng.lat())
+      console.log(position.latLng.lng())
       this.coordinate = {
         lat: position.latLng.lat(),
         lng: position.latLng.lng()
-      };
+      }
     }
   }
-};
+}
 </script>

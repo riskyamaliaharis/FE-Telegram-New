@@ -71,7 +71,6 @@ export default {
   },
   methods: {
     onSubmit() {
-      console.log(this.form)
       this.login(this.form)
         .then(result => {
           this.successAlert(result.data.msg)

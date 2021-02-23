@@ -22,18 +22,15 @@ export default {
   },
   actions: {
     getMyProfile(context, payload) {
-      console.log('payload ' + payload)
       return new Promise((resolve, reject) => {
         axios
-          .get(`http://localhost:3000/showprofile/${payload}`)
+          .get(`${process.env.VUE_APP_URL}showprofile/${payload}`)
           .then(result => {
-            console.log(result)
             context.commit('setMyProfile', result.data.data[0])
             resolve(result)
           })
           .catch(error => {
-            console.log(error)
-            reject(error)
+            reject(error.response)
           })
       })
     },
@@ -54,29 +51,39 @@ export default {
           console.log(pair[0] + ', ' + pair[1])
         }
         axios
-          .patch(`http://localhost:3000/updateuser/${payload}`, data)
+          .patch(`${process.env.VUE_APP_URL}updateuser/${payload}`, data)
           .then(response => {
             context.dispatch('getMyProfile')
-            alert(response.data.msg)
+
             resolve(response)
           })
           .catch(error => {
-            alert('Failed to update profile' + error.response.data.msg)
             reject(error.response)
           })
       })
     },
     updateLocation(context, payload) {
-      console.log(payload)
       return new Promise((resolve, reject) => {
         axios
-          .patch('http://localhost:3000/update/location', payload)
+          .patch(`${process.env.VUE_APP_URL}update/location`, payload)
           .then(result => {
-            console.log(result)
             resolve(result)
           })
           .catch(error => {
-            reject(error)
+            reject(error.response)
+          })
+      })
+    },
+    deletePhotos(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .patch(`${process.env.VUE_APP_URL}update/photo/${payload}`)
+          .then(result => {
+            context.dispatch('getMyProfile')
+            resolve(result)
+          })
+          .catch(error => {
+            reject(error.response)
           })
       })
     }

@@ -13,7 +13,7 @@
           <b-row>
             <b-col xl="1" lg="2" md="2" sm="3" cols="3">
               <b-img
-                :src="'http://localhost:3000/users/' + itemChat.user_photo"
+                :src="`${url}users/${itemChat.user_photo}`"
                 width="64"
                 alt=""
               ></b-img>
@@ -40,8 +40,8 @@
                 style="width:40px; border-radius:50%"
                 :src="
                   itema.sender_id === profile.user_id
-                    ? `http://localhost:3000/users/${profile.user_photo}`
-                    : `http://localhost:3000/users/${itemChat.user_photo}`
+                    ? `${url}users/${profile.user_photo}`
+                    : `${url}users/${itemChat.user_photo}`
                 "
                 alt="Avatar"
                 class="right"
@@ -69,7 +69,7 @@
           <b-col cols="10">
             <div>
               <b-form-input
-                v-model="formMessages.message"
+                v-model="formMessages.room_message"
                 placeholder="Write a message"
               ></b-form-input>
             </div>
@@ -88,23 +88,24 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations, mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import io from 'socket.io-client'
 export default {
   data() {
     return {
-      socket: io('http://localhost:3000'),
+      socket: io(`${process.env.VUE_APP_URL}`),
       formFriend: {
-        id_a: '',
-        id_b: '',
-        random_number: ''
+        user_a: '',
+        user_b: '',
+        room_random_number: ''
       },
       formMessages: {
-        random_number: '',
-        message: '',
-        sender: '',
-        receiver: ''
-      }
+        room_random_number: '',
+        room_message: '',
+        sender_id: '',
+        receiver_id: ''
+      },
+      url: process.env.VUE_APP_URL
     }
   },
   computed: {
@@ -115,23 +116,27 @@ export default {
     })
   },
   methods: {
-    ...mapMutations(['updateFormFriend', 'updateFormMessages']),
     ...mapActions(['addRoomListForFriendVuex', 'addChatVuex']),
     sendMessage() {
-      this.formFriend.id_a = this.itemChat.user_b
-      this.formFriend.id_b = this.itemChat.user_a
-      this.formFriend.random_number = this.itemChat.room_random_number
-      this.updateFormFriend(this.formFriend)
-      this.addRoomListForFriendVuex()
-      this.formMessages.random_number = this.itemChat.room_random_number
-      this.formMessages.sender = this.itemChat.user_a
-      this.formMessages.receiver = this.itemChat.user_b
+      this.formFriend.user_a = this.itemChat.user_b
+      this.formFriend.user_b = this.itemChat.user_a
+      this.formFriend.room_random_number = this.itemChat.room_random_number
+      this.addRoomListForFriendVuex(this.formFriend)
+      this.formMessages.room_random_number = this.itemChat.room_random_number
+      this.formMessages.sender_id = this.itemChat.user_a
+      this.formMessages.receiver_id = this.itemChat.user_b
 
-      this.updateFormMessages(this.formMessages)
-      // this.addChatVuex().then(() => {
-      this.socket.emit('roomMessage', this.formMessages)
-      // })
-      this.formMessages.message = ''
+      const setData = {
+        receiver_id: this.itemChat.user_b,
+        room_message: this.formMessages.room_message,
+        room_random_number: this.itemChat.room_random_number,
+        sender_id: this.itemChat.user_a,
+        created_at: new Date()
+      }
+      this.addChatVuex(this.formMessages)
+      this.socket.emit('roomMessage', setData)
+
+      this.formMessages.room_message = ''
     }
   }
 }
@@ -143,8 +148,6 @@ export default {
   background-color: white;
   padding-top: 30%;
   padding-left: 40%;
-}
-.no-data img {
 }
 .chat-styling-a {
   background-color: #7e98df;

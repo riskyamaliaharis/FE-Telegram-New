@@ -39,8 +39,6 @@ export default {
     this.getMyProfile(this.user.user_id)
     this.$getLocation()
       .then(coordinates => {
-        console.log('coordinates')
-        console.log(coordinates)
         this.coordinate = {
           lat: coordinates.lat,
           lng: coordinates.lng
@@ -54,7 +52,7 @@ export default {
         }
       })
       .catch(error => {
-        alert(error)
+        console.log(error)
       })
   },
   methods: {

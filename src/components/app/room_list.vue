@@ -22,9 +22,9 @@
               <template #aside>
                 <b-img
                   style="border-radius:10px"
-                  :src="'http://localhost:3000/users/' + item.user_photo"
+                  :src="`${url}users/${item.user_photo}`"
                   width="64"
-                  :alt="profile"
+                  alt="profile"
                 ></b-img>
               </template>
               <h5 class="mt-0">{{ item.user_name }}</h5>
@@ -47,9 +47,10 @@ import moment from 'moment'
 export default {
   data() {
     return {
-      socket: io('http://localhost:3000'),
+      socket: io(`${process.env.VUE_APP_URL}`),
       oldRoom: '',
-      search: ''
+      search: '',
+      url: process.env.VUE_APP_URL
     }
   },
   created() {
@@ -61,22 +62,26 @@ export default {
     ...mapGetters({ rooms: 'setRoomListGetters' })
   },
   methods: {
-    ...mapMutations(['changeDataItem', 'setMySearch']),
+    ...mapMutations(['changeDataItem', 'setMySearch', 'setChat']),
     ...mapActions(['getChatsVuex', 'deleteChatVuex', 'getRoomListVuex']),
     sendDataThisRoom(item) {
-      console.log(item)
       this.changeDataItem(item)
-      // if (this.oldRoom) {
-      // const newData = {
-      //   oldRoom: this.oldRoom,
-      //   room_chat: item.item.room_random_number
-      // }
-      // console.log(newData)
-      // this.socket.emit('changeRoom', newData)
+
+      if (!this.oldRoom) {
+        this.socket.emit('joinRoom', {
+          room_chat: item.room_random_number
+        })
+        this.oldRoom = item.room_random_number
+      } else {
+        this.socket.emit('changeRoom', {
+          room_chat: item.room_random_number,
+          oldRoom: this.oldRoom
+        })
+        this.oldRoom = item.room_random_number
+      }
       this.getChatsVuex(item.room_random_number).then(() => {
         this.oldRoom = item.room_random_number
       })
-      // }
     },
     searching() {
       this.setMySearch(this.search)
