@@ -29,7 +29,7 @@ export default {
     login(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .post(`${process.env.VUE_APP_URL}login`, payload)
+          .post(`${process.env.VUE_APP_URL2}/login`, payload)
           .then(result => {
             context.commit('setUser', result.data.data)
             localStorage.setItem('token', result.data.data.token)
@@ -43,7 +43,7 @@ export default {
     signup(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .post(`${process.env.VUE_APP_URL}signup`, payload)
+          .post(`${process.env.VUE_APP_URL2}/signup`, payload)
           .then(result => {
             context.commit('setNewUser', result.data.data)
             resolve(result)

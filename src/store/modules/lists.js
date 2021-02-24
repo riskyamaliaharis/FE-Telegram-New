@@ -28,7 +28,7 @@ export default {
     addRoomListVuex(context) {
       return new Promise((resolve, reject) => {
         axios
-          .post(`${process.env.VUE_APP_URL}addlistchat`, context.state.form)
+          .post(`${process.env.VUE_APP_URL2}/addlistchat`, context.state.form)
           .then(result => {
             context.dispatch('getRoomListVuex')
             resolve(result)
@@ -42,7 +42,7 @@ export default {
       return new Promise((resolve, reject) => {
         axios
           .get(
-            `${process.env.VUE_APP_URL}getlistchat/${context.state.myId}?search=${context.state.search}`
+            `${process.env.VUE_APP_URL2}/getlistchat/${context.state.myId}?search=${context.state.search}`
           )
           .then(result => {
             context.commit('setDataRooms', result.data.data)

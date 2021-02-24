@@ -20,7 +20,15 @@
           >
             <b-media>
               <template #aside>
+                <img
+                  width="64"
+                  v-if="item.user_photo === ''"
+                  src="../../assets/icon-profile.png"
+                  alt=""
+                  style="border-radius:10px"
+                />
                 <b-img
+                  v-else
                   style="border-radius:10px"
                   :src="`${url}users/${item.user_photo}`"
                   width="64"
@@ -47,7 +55,9 @@ import moment from 'moment'
 export default {
   data() {
     return {
-      socket: io(`${process.env.VUE_APP_URL}`),
+      socket: io(process.env.VUE_APP_URL3, {
+        path: '/chatapi/socket.io'
+      }),
       oldRoom: '',
       search: '',
       url: process.env.VUE_APP_URL

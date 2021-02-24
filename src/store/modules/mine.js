@@ -24,7 +24,7 @@ export default {
     getMyProfile(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .get(`${process.env.VUE_APP_URL}showprofile/${payload}`)
+          .get(`${process.env.VUE_APP_URL2}/showprofile/${payload}`)
           .then(result => {
             context.commit('setMyProfile', result.data.data[0])
             resolve(result)
@@ -51,9 +51,9 @@ export default {
           console.log(pair[0] + ', ' + pair[1])
         }
         axios
-          .patch(`${process.env.VUE_APP_URL}updateuser/${payload}`, data)
+          .patch(`${process.env.VUE_APP_URL2}/updateuser/${payload}`, data)
           .then(response => {
-            context.dispatch('getMyProfile')
+            context.dispatch('getMyProfile', payload)
 
             resolve(response)
           })
@@ -65,7 +65,7 @@ export default {
     updateLocation(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .patch(`${process.env.VUE_APP_URL}update/location`, payload)
+          .patch(`${process.env.VUE_APP_URL2}/update/location`, payload)
           .then(result => {
             resolve(result)
           })
@@ -77,9 +77,9 @@ export default {
     deletePhotos(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .patch(`${process.env.VUE_APP_URL}update/photo/${payload}`)
+          .patch(`${process.env.VUE_APP_URL2}/update/photo/${payload}`)
           .then(result => {
-            context.dispatch('getMyProfile')
+            context.dispatch('getMyProfile', payload)
             resolve(result)
           })
           .catch(error => {

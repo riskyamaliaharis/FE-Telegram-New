@@ -13,10 +13,17 @@
           <b-row>
             <b-col xl="1" lg="2" md="2" sm="3" cols="3">
               <b-img
+                v-if="itemChat.user_photo"
                 :src="`${url}users/${itemChat.user_photo}`"
                 width="64"
                 alt=""
               ></b-img>
+              <img
+                width="64"
+                v-else
+                src="../../assets/icon-profile.png"
+                alt=""
+              />
             </b-col>
             <b-col xl="5" lg="5" md="5" sm="5" cols="5">
               <div>
@@ -93,7 +100,9 @@ import io from 'socket.io-client'
 export default {
   data() {
     return {
-      socket: io(`${process.env.VUE_APP_URL}`),
+      socket: io(process.env.VUE_APP_URL3, {
+        path: '/chatapi/socket.io'
+      }),
       formFriend: {
         user_a: '',
         user_b: '',

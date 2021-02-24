@@ -20,7 +20,7 @@ export default {
     addRoomListForFriendVuex(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .post(`${process.env.VUE_APP_URL}addlistchatforfriend`, payload)
+          .post(`${process.env.VUE_APP_URL2}/addlistchatforfriend`, payload)
           .then(result => {
             context.dispatch('getRoomListVuex')
             resolve(result)
@@ -33,7 +33,7 @@ export default {
     addChatVuex(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .post(`${process.env.VUE_APP_URL}chat/send`, payload)
+          .post(`${process.env.VUE_APP_URL2}/chat/send`, payload)
           .then(result => {
             // context.dispatch('getRoomChatsVuex')
             resolve(result)
@@ -46,7 +46,7 @@ export default {
     getChatsVuex(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .get(`${process.env.VUE_APP_URL}chat/${payload}`)
+          .get(`${process.env.VUE_APP_URL2}/chat/${payload}`)
           .then(result => {
             context.commit('saveMessages', result.data.data)
             resolve(result)

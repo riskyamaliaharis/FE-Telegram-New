@@ -12,7 +12,9 @@ Vue.use(VueGeolocation)
 
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
-
+console.log(process.env.VUE_APP_URL)
+console.log(process.env.VUE_APP_URL2)
+console.log(process.env.VUE_APP_URL3)
 Vue.config.productionTip = false
 Vue.use(VueGoogleMaps, {
   load: {

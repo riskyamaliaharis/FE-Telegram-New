@@ -16,7 +16,7 @@ export default {
     getContactsVuex(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .get(`${process.env.VUE_APP_URL}getfriend/${payload}`)
+          .get(`${process.env.VUE_APP_URL2}/getfriend/${payload}`)
           .then(result => {
             context.commit('setMyFriendsList', result.data.data)
             resolve(result)
@@ -33,7 +33,7 @@ export default {
           user_email: context.state.emailInvitation
         }
         axios
-          .post(`${process.env.VUE_APP_URL}addfriend`, data)
+          .post(`${process.env.VUE_APP_URL2}/addfriend`, data)
           .then(result => {
             context.dispatch('getContactsVuex')
             resolve(result)
