@@ -1,6 +1,6 @@
 <h1 align='center'>Vue JS - Telegram</h1>
   <p align="center">
-    <a href="link_deploy">View Demo</a>
+    <a href="https://chat-telegram.netlify.app/">View Demo</a>
     ·
     <a href="https://github.com/riskyamaliaharis/FE-Telegram-New/issues">Report Bug</a>
     ·
