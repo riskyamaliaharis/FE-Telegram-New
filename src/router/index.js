@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../views/Auth/Login.vue'
 import Register from '../views/Auth/Register.vue'
-import Maps from '../views/Maps.vue'
 import Chat from '../views/App/Chat.vue'
 
 Vue.use(VueRouter)
@@ -17,11 +16,6 @@ const routes = [
     path: '/signup',
     name: 'Register',
     component: Register
-  },
-  {
-    path: '/maps',
-    name: 'Maps',
-    component: Maps
   },
   {
     path: '/chat',

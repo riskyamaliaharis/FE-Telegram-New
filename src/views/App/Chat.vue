@@ -1,14 +1,16 @@
 <template>
   <div class="body" align-v="center">
-    <b-row align-v="stretch">
-      <b-col class="left" lg="4" md="5" cols="6">
-        <Profile />
-        <RoomList />
-      </b-col>
-      <b-col class="right" lg="8" md="7" cols="6">
-        <RoomChat />
-      </b-col>
-    </b-row>
+    <b-container fluid>
+      <b-row align-v="stretch" align-h="center">
+        <b-col class="left" xl="4" lg="4" md="5" sm="11" cols="11">
+          <Profile />
+          <RoomList />
+        </b-col>
+        <b-col class="right" xl="7" lg="7" md="6" sm="11" cols="11">
+          <RoomChat />
+        </b-col>
+      </b-row>
+    </b-container>
   </div>
 </template>
 
@@ -90,7 +92,7 @@ export default {
 
 <style scoped>
 div.body {
-  background-color: rgb(227, 225, 230);
+  background-color: white;
 }
 
 .left {

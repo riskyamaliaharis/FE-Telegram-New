@@ -45,19 +45,13 @@
             style="margin-bottom:20px"
           >
             <b-col
-              cols="1"
+              xl="1"
+              lg="1"
+              md="2"
+              sm="2"
+              cols="2"
               :order="itema.sender_id === profile.user_id ? 5 : 0"
             >
-              <!-- <img
-                style="width:40px; border-radius:50%"
-                :src="
-                  itema.sender_id === profile.user_id
-                    ? `${url}users/${profile.user_photo}`
-                    : `${url}users/${itemChat.user_photo}`
-                "
-                alt="Avatar"
-                class="right"
-            /> -->
               <img
                 v-if="itema.sender_id === profile.user_id && profile.user_photo"
                 style="width:40px; border-radius:50%"
@@ -93,7 +87,7 @@
                 class="right"
               />
             </b-col>
-            <b-col cols="4"
+            <b-col xl="4" lg="5" md="6" sm="8" cols="9"
               ><div
                 :class="
                   itema.sender_id === profile.user_id
@@ -212,6 +206,7 @@ export default {
   border-radius: 16px 0 16px 16px;
   padding: 10px;
   color: white;
+  word-wrap: break-word;
 }
 .chat-styling-b {
   background-color: white;
@@ -219,6 +214,7 @@ export default {
   border-radius: 0 16px 16px 16px;
   padding: 10px;
   color: black;
+  word-wrap: break-word;
 }
 .sending {
   cursor: pointer;
@@ -234,7 +230,7 @@ export default {
   margin: 0;
 }
 .chat-area {
-  height: 570px;
+  height: 550px;
   padding: 15px 30px;
   overflow: auto;
 }

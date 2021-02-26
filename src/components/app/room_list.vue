@@ -118,12 +118,12 @@ export default {
   width: 100%;
   height: 100px;
   background-color: white;
-  padding: 7px;
+  /* padding: 7px; */
   box-sizing: border-box;
 }
 .searchMessage,
 .card-chat,
 .messages-list {
-  margin-left: 10px;
+  /* margin-left: 10px; */
 }
 </style>
