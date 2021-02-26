@@ -13,7 +13,6 @@ export default {
     },
     setChat(state, payload) {
       state.chatsMsg.push(payload)
-      console.log(state.chatsMsg)
     }
   },
   actions: {

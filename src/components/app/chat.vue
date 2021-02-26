@@ -6,6 +6,41 @@
           <div class="logo">
             <a href="#">Telegram</a>
           </div>
+          <div>
+            <b-button variant="light" @click="showNotif">
+              Notifications
+              <b-badge variant="dark">{{ confirms.length }}</b-badge>
+            </b-button>
+            <div
+              v-show="isNotif"
+              style="position:absolute;z-index:12;background:#7e98df;padding:10px;"
+            >
+              <div v-if="confirms.length < 1" style="text-align:center">
+                <b-icon icon="people-fill" font-scale="3" mr-2></b-icon>
+                <br />
+                No Invitation at This Time
+              </div>
+              <div v-else>
+                <b-icon
+                  icon="people-fill"
+                  animation="fade"
+                  font-scale="3"
+                ></b-icon>
+                <b-card
+                  :title="follow.user_name"
+                  v-for="(follow, idx) in confirms"
+                  :key="idx"
+                >
+                  <small style="text-align:right">{{
+                    formatTime(follow.created_at)
+                  }}</small>
+                  <p>{{ follow.user_email }}</p>
+                  <b-card-text>wants to be your friend</b-card-text>
+                  <b-button href="#" variant="dark">Confirm</b-button>
+                </b-card>
+              </div>
+            </div>
+          </div>
           <div class="nav_right">
             <ul>
               <li class="nr_li dd_main">
@@ -292,6 +327,7 @@
 <script>
 import { mapActions, mapGetters, mapMutations } from 'vuex'
 import { alert } from '../../mixins/alert'
+import moment from 'moment'
 export default {
   mixins: [alert],
   data() {
@@ -304,6 +340,7 @@ export default {
         location: ''
       },
       isNav: false,
+      isNotif: false,
       image: false,
       isShowMaps: false,
       coordinate: {
@@ -323,8 +360,12 @@ export default {
     ...mapGetters({
       user: 'setUser',
       profile: 'setProfileMine',
-      myContacts: 'setMyContactsGetters'
+      myContacts: 'setMyContactsGetters',
+      confirms: 'setConfirms'
     })
+  },
+  async created() {
+    await this.needConfirmVuex(this.user.user_id)
   },
   methods: {
     ...mapActions([
@@ -333,13 +374,10 @@ export default {
       'getContactsVuex',
       'addFriendVuex',
       'addRoomListVuex',
-      'deletePhotos'
+      'deletePhotos',
+      'needConfirmVuex'
     ]),
-    ...mapMutations([
-      'sendMyUpdatedData',
-      'sendEmailInvitation',
-      'setRequestBodyAddRoomList'
-    ]),
+    ...mapMutations(['sendMyUpdatedData', 'setRequestBodyAddRoomList']),
     show() {
       if (this.isNav) {
         this.isNav = false
@@ -347,6 +385,13 @@ export default {
         this.isNav = true
       }
       this.goToProfile()
+    },
+    showNotif() {
+      if (this.isNotif) {
+        this.isNotif = false
+      } else {
+        this.isNotif = true
+      }
     },
     friendsLoc(loc) {
       if (this.isShowMaps) {
@@ -438,8 +483,16 @@ export default {
         })
     },
     goToAddFriend() {
-      this.sendEmailInvitation(this.inviteEmail)
-      this.addFriendVuex(this.user.user_id)
+      this.addFriendVuex({
+        user_id: this.user.user_id,
+        user_email: this.inviteEmail
+      })
+        .then(result => {
+          this.successAlert(result.data.msg)
+        })
+        .catch(error => {
+          this.errorAlert(error.data.msg)
+        })
     },
     goToChatList(id) {
       // this.$router.push({
@@ -459,6 +512,10 @@ export default {
         .catch(error => {
           this.errorAlert(error.data.msg)
         })
+    },
+    formatTime(value) {
+      moment.locale('en')
+      return moment(String(value)).calendar()
     }
   }
 }

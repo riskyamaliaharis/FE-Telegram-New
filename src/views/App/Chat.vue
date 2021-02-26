@@ -17,15 +17,21 @@ import Profile from '../../components/app/chat'
 import RoomChat from '../../components/app/room_chat_with'
 import RoomList from '../../components/app/room_list'
 import { mapActions, mapGetters, mapMutations } from 'vuex'
+import io from 'socket.io-client'
 export default {
   name: 'Chat',
+
   data() {
     return {
+      socket: io(process.env.VUE_APP_URL3, {
+        path: '/chatapi/socket.io'
+      }),
       location: '',
       coordinate: {
         lat: 10,
         lng: 10
-      }
+      },
+      status: 'offline'
     }
   },
   components: {
@@ -33,17 +39,19 @@ export default {
     RoomChat,
     RoomList
   },
-  created() {
-    this.setMyId(this.user.user_id)
-    this.getRoomListVuex()
-    this.getMyProfile(this.user.user_id)
+  async created() {
+    console.log(this.user.user_id)
+    await this.setMyId(this.user.user_id)
+    await this.getRoomListVuex()
+    await this.getMyProfile(this.user.user_id)
     this.$getLocation()
       .then(coordinates => {
+        console.log(coordinates)
         this.coordinate = {
           lat: coordinates.lat,
           lng: coordinates.lng
         }
-        if (coordinates.accuracy <= 5000) {
+        if (coordinates.accuracy <= 15000) {
           this.location = `${this.coordinate.lat}, ${this.coordinate.lng}`
           this.updateLocation({
             user_location: this.location,
@@ -54,13 +62,28 @@ export default {
       .catch(error => {
         console.log(error)
       })
+
+    await this.getMyRooms(this.user.user_id)
+
+    this.isLogin
+      ? this.socket.emit('status', { status: 'online', room: this.roomss })
+      : this.socket.emit('status', { status: this.status, room: this.roomss })
   },
   methods: {
-    ...mapActions(['getRoomListVuex', 'getMyProfile', 'updateLocation']),
-    ...mapMutations(['setMyId'])
+    ...mapActions([
+      'getRoomListVuex',
+      'getMyProfile',
+      'updateLocation',
+      'getMyRooms'
+    ]),
+    ...mapMutations(['setMyId', 'setStatus'])
   },
   computed: {
-    ...mapGetters({ user: 'setUser' })
+    ...mapGetters({
+      user: 'setUser',
+      isLogin: 'isLogin',
+      roomss: 'setMyRoomss'
+    })
   }
 }
 </script>

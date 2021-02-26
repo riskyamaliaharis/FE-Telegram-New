@@ -2,14 +2,14 @@ import axios from 'axios'
 export default {
   state: {
     myContacts: [],
-    emailInvitation: ''
+    confirms: []
   },
   mutations: {
     setMyFriendsList(context, payload) {
       context.myContacts = payload
     },
-    sendEmailInvitation(context, payload) {
-      context.emailInvitation = payload
+    setNeedConfirm(context, payload) {
+      context.confirms = payload
     }
   },
   actions: {
@@ -28,12 +28,8 @@ export default {
     },
     addFriendVuex(context, payload) {
       return new Promise((resolve, reject) => {
-        const data = {
-          user_id: payload,
-          user_email: context.state.emailInvitation
-        }
         axios
-          .post(`${process.env.VUE_APP_URL2}/addfriend`, data)
+          .post(`${process.env.VUE_APP_URL2}/addfriend`, payload)
           .then(result => {
             context.dispatch('getContactsVuex')
             resolve(result)
@@ -42,11 +38,32 @@ export default {
             reject(error.response)
           })
       })
+    },
+    needConfirmVuex(context, payload) {
+      return new Promise((resolve, reject) => {
+        console.log('ya' + payload)
+        axios
+          .get(
+            `${process.env.VUE_APP_URL2}/getnewfriend/confirm/friend/${payload}`
+          )
+          .then(result => {
+            console.log(result)
+            // context.commit('setNeedConfirm', result.data.data)
+            resolve(result)
+          })
+          .catch(error => {
+            console.log(error)
+            reject(error.response)
+          })
+      })
     }
   },
   getters: {
     setMyContactsGetters(state) {
       return state.myContacts
+    },
+    setConfirms(state) {
+      return state.confirms
     }
   }
 }

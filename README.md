@@ -2,9 +2,9 @@
   <p align="center">
     <a href="link_deploy">View Demo</a>
     ·
-    <a href="https://github.com/riskyamaliaharis/FE-Telegram/issues">Report Bug</a>
+    <a href="https://github.com/riskyamaliaharis/FE-Telegram-New/issues">Report Bug</a>
     ·
-    <a href="https://github.com/riskyamaliaharis/FE-Telegram/issues">Request Feature</a>
+    <a href="https://github.com/riskyamaliaharis/FE-Telegram-New/issues">Request Feature</a>
   </p>
 
 ![Image Banner](src/assets/telegram.jpg)
@@ -22,7 +22,7 @@ This app called Telegram. It is not a rival of telegram of course, but just a si
 
 1. <a href="https://nodejs.org/en/download/">Node Js</a>
 2. Node_modules `npm install` or `yarn install`
-3. Backend API Telegram [`here`](https://github.com/riskyamaliaharis/FE-Telegram.git)
+3. Backend API Telegram [`here`](https://github.com/riskyamaliaharis/BE-Telegram.git)
 
 ## Getting Started
 
@@ -32,7 +32,9 @@ This app called Telegram. It is not a rival of telegram of course, but just a si
 4. Add .env file at root folder project
 
 ```sh
-VUE_APP_ENDPOINT = [Backend API](https://github.com/riskyamaliaharis/BE-Telegram)
+VUE_APP_URL=http://localhost:3001/chatapi/uploadfile/
+VUE_APP_URL2=http://localhost:3001/chatapi
+VUE_APP_URL3=http://localhost:3001/
 ```
 
 5. Type `npm run serve`
@@ -42,6 +44,7 @@ VUE_APP_ENDPOINT = [Backend API](https://github.com/riskyamaliaharis/BE-Telegram
 - [Axios](https://www.npmjs.com/package/axios)
 - [Vuex](https://vuex.vuejs.org/)
 - [GMaps API](https://developers.google.com/maps/documentation/javascript/overview)
+- [Socket.io](https://socket.io/docs/v3/index.html)
 
 ## License - untuk project individu
 

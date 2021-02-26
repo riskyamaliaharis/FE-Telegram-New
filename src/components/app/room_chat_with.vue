@@ -29,7 +29,9 @@
               <div>
                 <h5 style="color: white">{{ itemChat.user_name }}</h5>
               </div>
-              <div><p style="color: white;">Online</p></div>
+              <div>
+                <p style="color: white;">{{ status }}</p>
+              </div>
             </b-col>
           </b-row>
         </div>
@@ -42,8 +44,11 @@
             :align-h="itema.sender_id === profile.user_id ? 'end' : 'start'"
             style="margin-bottom:20px"
           >
-            <b-col cols="1" :order="itema.sender_id === profile.user_id ? 5 : 0"
-              ><img
+            <b-col
+              cols="1"
+              :order="itema.sender_id === profile.user_id ? 5 : 0"
+            >
+              <!-- <img
                 style="width:40px; border-radius:50%"
                 :src="
                   itema.sender_id === profile.user_id
@@ -52,7 +57,42 @@
                 "
                 alt="Avatar"
                 class="right"
-            /></b-col>
+            /> -->
+              <img
+                v-if="itema.sender_id === profile.user_id && profile.user_photo"
+                style="width:40px; border-radius:50%"
+                :src="`${url}users/${profile.user_photo}`"
+                alt="Avatar"
+                class="right"
+              />
+              <img
+                v-else-if="
+                  itema.sender_id === profile.user_id && !profile.user_photo
+                "
+                style="width:40px; border-radius:50%"
+                src="../../assets/icon-profile.png"
+                alt="Avatar"
+                class="right"
+              />
+              <img
+                v-else-if="
+                  itema.sender_id !== profile.user_id && itemChat.user_photo
+                "
+                style="width:40px; border-radius:50%"
+                :src="`${url}users/${itemChat.user_photo}`"
+                alt="Avatar"
+                class="right"
+              />
+              <img
+                v-else-if="
+                  itema.sender_id !== profile.user_id && !itemChat.user_photo
+                "
+                style="width:40px; border-radius:50%"
+                src="../../assets/icon-profile.png"
+                alt="Avatar"
+                class="right"
+              />
+            </b-col>
             <b-col cols="4"
               ><div
                 :class="
@@ -98,11 +138,18 @@
 import { mapGetters, mapActions } from 'vuex'
 import io from 'socket.io-client'
 export default {
+  created() {
+    this.socket.on('spreadStatus', newData => {
+      console.log(newData)
+      this.status = newData.status
+    })
+  },
   data() {
     return {
       socket: io(process.env.VUE_APP_URL3, {
         path: '/chatapi/socket.io'
       }),
+      status: 'offline',
       formFriend: {
         user_a: '',
         user_b: '',

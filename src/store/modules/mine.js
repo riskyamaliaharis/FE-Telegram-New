@@ -7,7 +7,8 @@ export default {
       user_email: '',
       user_photo: '',
       user_location: ''
-    }
+    },
+    roomss: []
   },
   mutations: {
     setMyProfile(context, payload) {
@@ -18,6 +19,9 @@ export default {
       context.form.user_email = payload.email
       context.form.user_photo = payload.photo
       context.form.user_location = payload.location
+    },
+    saveMyRooms(context, payload) {
+      context.roomss = payload
     }
   },
   actions: {
@@ -86,6 +90,20 @@ export default {
             reject(error.response)
           })
       })
+    },
+    getMyRooms(context, payload) {
+      console.log(payload)
+      return new Promise((resolve, reject) => {
+        axios
+          .get(`${process.env.VUE_APP_URL2}/myrooms/list/${payload}`)
+          .then(result => {
+            context.commit('saveMyRooms', result.data.data)
+            resolve(result)
+          })
+          .catch(error => {
+            reject(error.response)
+          })
+      })
     }
   },
   getters: {
@@ -103,6 +121,9 @@ export default {
     },
     setUserLocationMine(state) {
       return state.form.user_location
+    },
+    setMyRoomss(state) {
+      return state.roomss
     }
   }
 }
