@@ -22,6 +22,7 @@
               <template #aside>
                 <img
                   width="64"
+                  height="64"
                   v-if="item.user_photo === ''"
                   src="../../assets/icon-profile.png"
                   alt=""
