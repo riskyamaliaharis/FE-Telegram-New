@@ -52,7 +52,9 @@
                 required
               />
             </div>
-            <p style="text-align: right"><a href="#">Forgot Password?</a></p>
+            <p style="text-align: right">
+              <router-link to="/"> Login</router-link>
+            </p>
             <br />
             <div>
               <button class="btn1" type="submit">Sign Up</button>

@@ -1,11 +1,11 @@
 <template>
   <div>
     <div v-if="!itemChat" class="no-data">
-      <img
+      <!-- <img
         src="../../../src/assets/icons8-web-chat-100.png"
         style="width:200px; height:200px"
         alt=""
-      />
+      /> -->
     </div>
     <div v-else>
       <b-container fluid class="container-header">

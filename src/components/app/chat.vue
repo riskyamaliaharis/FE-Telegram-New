@@ -6,7 +6,7 @@
           <div class="logo">
             <a href="#">Telegram</a>
           </div>
-          <div>
+          <!-- <div>
             <b-button variant="light" @click="showNotif">
               Notifications
               <b-badge variant="dark">{{ confirms.length }}</b-badge>
@@ -40,7 +40,7 @@
                 </b-card>
               </div>
             </div>
-          </div>
+          </div> -->
           <div class="nav_right">
             <ul>
               <li class="nr_li dd_main">

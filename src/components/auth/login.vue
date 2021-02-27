@@ -23,6 +23,7 @@
                 id="inputEmail"
                 type="email"
                 v-model="form.user_email"
+                required
               />
             </div>
 
@@ -34,6 +35,7 @@
                 id="inputPass"
                 type="password"
                 v-model="form.user_password"
+                required
               />
             </div>
             <p style="text-align: right">
