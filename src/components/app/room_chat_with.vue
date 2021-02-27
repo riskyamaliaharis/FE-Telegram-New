@@ -25,7 +25,7 @@
                 alt=""
               />
             </b-col>
-            <b-col xl="5" lg="5" md="5" sm="5" cols="5">
+            <b-col xl="5" lg="5" md="5" sm="7" cols="8">
               <div>
                 <h5 style="color: white">{{ itemChat.user_name }}</h5>
               </div>

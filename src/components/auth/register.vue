@@ -1,8 +1,16 @@
 <template>
   <div>
-    <b-container class="bv-example-row bv-example-row-flex-cols">
+    <b-container>
       <b-row>
-        <b-col class="card" cols="5" align-self="center">
+        <b-col
+          class="card"
+          xl="5"
+          lg="5"
+          md="6"
+          sm="8"
+          cols="12"
+          align-self="center"
+        >
           <b-form @submit.prevent="onSubmit" @reset.prevent="onReset">
             <h4>Register</h4>
 

@@ -121,9 +121,4 @@ export default {
   /* padding: 7px; */
   box-sizing: border-box;
 }
-.searchMessage,
-.card-chat,
-.messages-list {
-  /* margin-left: 10px; */
-}
 </style>
